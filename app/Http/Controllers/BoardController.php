@@ -30,22 +30,22 @@ class BoardController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateBoardRequest $request, Board $board)
+    public function update(UpdateBoardRequest $request, Board $member)
     {
-        if (!$board) {
+        if (!$member) {
             return response()->json(['error' => 'Board not found'], 404);
         }
         $validated = $request->validated();
-        $board->update($validated);
-        return response()->json($board, 200);
+        $member->update($validated);
+        return response()->json($member, 200);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Board $board)
+    public function destroy(Board $member)
     {
-        $board->delete();
+        $member->delete();
         return response()->json(null, 204);
     }
 }

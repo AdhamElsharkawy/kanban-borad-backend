@@ -25,8 +25,8 @@ class UpdateBoardRequest extends FormRequest
         return [
             'name' => 'required|string|max:255',
             'title' => 'required|string|max:50',
-            'mobile' => 'required|string|unique:boards,mobile,' .  $this->route('member'),
-            'email' => 'required|email|unique:boards,email,' .  $this->route('member'),
+            'mobile' => 'required|string|unique:boards,mobile,' .  $this->route('member')->id,
+            'email' => 'required|email|unique:boards,email,' .  $this->route('member')->id,
             'age' => 'required|integer|min:18|max:80',
             'status' => 'required|string|in:sent_to_therapists,preparing_offer,first_contact,unclaimed'
         ];
