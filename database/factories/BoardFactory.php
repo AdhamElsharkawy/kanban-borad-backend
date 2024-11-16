@@ -19,7 +19,7 @@ class BoardFactory extends Factory
         return [
             'name' => $this->faker->firstName(),
             'title' => $this->faker->title(),
-            'age' => $this->faker->numberBetween(18, 80),
+            'age' => $this->faker->numberBetween(18, 100),
             'email' => $this->faker->unique()->safeEmail,
             'mobile' => $this->faker->unique()->phoneNumber,
             'status' => $this->faker->randomElement(['sent_to_therapists', 'preparing_offer', 'first_contact', 'unclaimed']),

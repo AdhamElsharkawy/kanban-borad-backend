@@ -1,0 +1,356 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Board Management API",
+        "description": "API documentation for managing boards and members.",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/members": {
+            "get": {
+                "tags": [
+                    "Boards"
+                ],
+                "summary": "Get all boards",
+                "operationId": "451ae5c7611138cdc0c51d707b3dc93d",
+                "responses": {
+                    "200": {
+                        "description": "A list of boards",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Board"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Boards"
+                ],
+                "summary": "Create a new board",
+                "operationId": "4d0964d217a786db6aad7e3466b7fce8",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "title",
+                                    "mobile",
+                                    "email",
+                                    "age"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "John Doe"
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "maxLength": 50,
+                                        "example": "Manager"
+                                    },
+                                    "mobile": {
+                                        "type": "string",
+                                        "example": "1234567890"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "johndoe@example.com"
+                                    },
+                                    "age": {
+                                        "type": "integer",
+                                        "maximum": 80,
+                                        "minimum": 18,
+                                        "example": 30
+                                    },
+                                    "status": {
+                                        "description": "Optional status of the board",
+                                        "type": "string",
+                                        "enum": [
+                                            "sent_to_therapists",
+                                            "preparing_offer",
+                                            "first_contact",
+                                            "unclaimed"
+                                        ],
+                                        "example": "first_contact"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Board created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Board"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "email": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The email has already been taken."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/api/members/{id}": {
+            "put": {
+                "tags": [
+                    "Boards"
+                ],
+                "summary": "Update an existing board",
+                "operationId": "e240856c44d798f10b44e340adc490fd",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the board to update",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "name",
+                                    "title",
+                                    "mobile",
+                                    "email",
+                                    "age",
+                                    "status"
+                                ],
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "maxLength": 255,
+                                        "example": "Jane Doe"
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "maxLength": 50,
+                                        "example": "Director"
+                                    },
+                                    "mobile": {
+                                        "type": "string",
+                                        "example": "0987654321"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "janedoe@example.com"
+                                    },
+                                    "age": {
+                                        "type": "integer",
+                                        "maximum": 80,
+                                        "minimum": 18,
+                                        "example": 40
+                                    },
+                                    "status": {
+                                        "type": "string",
+                                        "enum": [
+                                            "sent_to_therapists",
+                                            "preparing_offer",
+                                            "first_contact",
+                                            "unclaimed"
+                                        ],
+                                        "example": "preparing_offer"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Board updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Board"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Board not found",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "type": "string",
+                                            "example": "Board not found"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Validation error",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "The given data was invalid."
+                                        },
+                                        "errors": {
+                                            "properties": {
+                                                "mobile": {
+                                                    "type": "array",
+                                                    "items": {
+                                                        "type": "string",
+                                                        "example": "The mobile number has already been taken."
+                                                    }
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Boards"
+                ],
+                "summary": "Delete an existing board",
+                "operationId": "3a767b17a705b7c9b03751db902550b1",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "ID of the board to delete",
+                        "required": true,
+                        "schema": {
+                            "type": "integer",
+                            "example": 1
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Board deleted successfully"
+                    },
+                    "404": {
+                        "description": "Board not found"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Board": {
+                "description": "Board model",
+                "properties": {
+                    "id": {
+                        "description": "The unique ID of the board",
+                        "type": "integer"
+                    },
+                    "name": {
+                        "description": "Name of the board",
+                        "type": "string"
+                    },
+                    "title": {
+                        "description": "Title of the board",
+                        "type": "string"
+                    },
+                    "mobile": {
+                        "description": "Mobile number of the board",
+                        "type": "string"
+                    },
+                    "email": {
+                        "description": "Email address of the board",
+                        "type": "string",
+                        "format": "email"
+                    },
+                    "age": {
+                        "description": "Age",
+                        "type": "integer"
+                    },
+                    "status": {
+                        "description": "Status of the board",
+                        "type": "string",
+                        "enum": [
+                            "sent_to_therapists",
+                            "preparing_offer",
+                            "first_contact",
+                            "unclaimed"
+                        ]
+                    },
+                    "created_at": {
+                        "description": "Creation timestamp",
+                        "type": "string",
+                        "format": "date-time"
+                    },
+                    "updated_at": {
+                        "description": "Update timestamp",
+                        "type": "string",
+                        "format": "date-time"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Boards",
+            "description": "API Endpoints for Managing Boards"
+        }
+    ]
+}

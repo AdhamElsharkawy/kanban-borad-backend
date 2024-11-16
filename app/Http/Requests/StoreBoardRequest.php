@@ -26,8 +26,8 @@ class StoreBoardRequest extends FormRequest
             'title' => 'required|string|max:50',
             'mobile' => 'required|string|unique:boards,mobile',
             'email' => 'required|email|unique:boards,email',
-            'age' => 'required|integer|min:18|max:80',
-            'status' => 'nullable|string|in:sent_to_therapists,preparing_offer,first_contact,unclaimed'
+            'age' => 'required|integer|min:18|max:120',
+            'status' => 'nullable|in:unclaimed',
         ];
     }
 }

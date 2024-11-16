@@ -14,6 +14,6 @@ class BoardSeeder extends Seeder
     public function run(): void
     {
         // Create 10 records of boards
-        Board::factory(10)->create();
+        Board::factory(30)->create();
     }
 }
